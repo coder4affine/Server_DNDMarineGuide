@@ -8,7 +8,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 // const db = require('./database');
 const dbfunc = require('./db-function');
-const UserRoute = require('../app/routes/user.route');
+const BusinessRoute = require('../app/routes/business.route');
 // const AuthenticRoute = require('../app/routes/authentic.route');
 // const errorCode = require('../common/error-code');
 // const errorMessage = require('../common/error-methods');
@@ -41,17 +41,17 @@ app.use(bodyParser.json());
 // app.use('/api',router);
 // AuthenticRoute.init(router);
 
-const secureApi = express.Router();
+const router = express.Router();
 
 // set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
 // body parser middleware
 
-app.use('/api', secureApi);
+app.use('/api', router);
 // secureApi.use(checkToken);
 
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
@@ -65,6 +65,6 @@ const ApiConfig = {
   app,
 };
 
-UserRoute.init(secureApi);
+BusinessRoute.init(router);
 
 module.exports = ApiConfig;
