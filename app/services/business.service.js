@@ -1,13 +1,13 @@
 const businessModel = require('../models/business-model');
 
-function getCityByEdition(edition) {
+function getCityByEdition(edition, service) {
   return new Promise((resolve, reject) => {
     businessModel
-      .getCityByEdition(edition)
-      .then((data) => {
+      .getCityByEdition(edition, service)
+      .then(data => {
         resolve(data);
       })
-      .catch((err) => {
+      .catch(err => {
         reject(err);
       });
   });
@@ -17,10 +17,10 @@ function getAllMarinas(edition) {
   return new Promise((resolve, reject) => {
     businessModel
       .getAllMarinas(edition)
-      .then((data) => {
+      .then(data => {
         resolve(data);
       })
-      .catch((err) => {
+      .catch(err => {
         reject(err);
       });
   });
@@ -30,10 +30,23 @@ function getAllCategories(edition) {
   return new Promise((resolve, reject) => {
     businessModel
       .getAllCategories(edition)
-      .then((data) => {
+      .then(data => {
         resolve(data);
       })
-      .catch((err) => {
+      .catch(err => {
+        reject(err);
+      });
+  });
+}
+
+function getAllCategories(edition) {
+  return new Promise((resolve, reject) => {
+    businessModel
+      .getAllCategories(edition)
+      .then(data => {
+        resolve(data);
+      })
+      .catch(err => {
         reject(err);
       });
   });
