@@ -124,13 +124,13 @@ function getBusinesses(query) {
       conn.query(
         `SELECT SQL_CALC_FOUND_ROWS business.bus_cd, business.*,cat_codes.*, states.st_name as stateName, countries.co_name as countryName  FROM business 
       LEFT JOIN cat_codes
-      ON cat_codes.bus_cat_cd = business.bus_cat_cd and cat_codes.bus_cat_cd = business.bus_cat_cd2 and cat_codes.bus_cat_cd = business.bus_cat_cd3  and cat_codes.bus_cat_cd = business.bus_cat_cd4 OR cat_codes.bus_cat_cd = business.bus_cat_cd5
+      ON cat_codes.bus_cat_cd = business.bus_cat_cd
       LEFT JOIN states
       ON states.st_cd = business.bus_st
       LEFT JOIN countries
       ON countries.co_cd = business.bus_co
       ${whereClause}
-      ORDER BY business.bus_cd ASC
+      ORDER BY business.bus_cd
       LIMIT ${query.result} OFFSET ${(query.page - 1) * query.result}`,
         (error1, businesses) => {
           if (error) {
