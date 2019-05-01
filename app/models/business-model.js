@@ -16,7 +16,7 @@ function getCityByEdition(query) {
     db.query(
       `SELECT DISTINCT business.bus_city FROM business 
       LEFT JOIN cat_codes
-      ON cat_codes.bus_cat_cd = business.bus_cat_cd AND cat_codes.bus_cat_cd = business.bus_cat_cd2 AND cat_codes.bus_cat_cd = business.bus_cat_cd3  AND cat_codes.bus_cat_cd = business.bus_cat_cd4 AND cat_codes.bus_cat_cd = business.bus_cat_cd5
+      ON cat_codes.bus_cat_cd = business.bus_cat_cd OR cat_codes.bus_cat_cd = business.bus_cat_cd2 OR cat_codes.bus_cat_cd = business.bus_cat_cd3  OR cat_codes.bus_cat_cd = business.bus_cat_cd4 OR cat_codes.bus_cat_cd = business.bus_cat_cd5
       ${whereClause}
       ORDER BY business.bus_city ASC`,
       (error, rows, fields) => {
@@ -66,7 +66,7 @@ function getAllCategories(query) {
     db.query(
       `SELECT cat_codes.* FROM cat_codes
       LEFT JOIN business
-      ON cat_codes.bus_cat_cd = business.bus_cat_cd AND cat_codes.bus_cat_cd = business.bus_cat_cd2 AND cat_codes.bus_cat_cd = business.bus_cat_cd3  AND cat_codes.bus_cat_cd = business.bus_cat_cd4 AND cat_codes.bus_cat_cd = business.bus_cat_cd5
+      ON cat_codes.bus_cat_cd = business.bus_cat_cd OR cat_codes.bus_cat_cd = business.bus_cat_cd2 OR cat_codes.bus_cat_cd = business.bus_cat_cd3  OR cat_codes.bus_cat_cd = business.bus_cat_cd4 OR cat_codes.bus_cat_cd = business.bus_cat_cd5
       ${whereClause}
       GROUP BY cat_codes.bus_cat_cd
       ORDER BY bus_cat_cd_desc ASC`,
@@ -106,7 +106,7 @@ function getBusinesses(query) {
             .split(',')
             .map(i => `'${i}'`)
             .join(',');
-          whereClause = `${whereClause} AND business.bus_cat_cd IN (${categories}) || business.bus_cat_cd2 IN (${categories}) || business.bus_cat_cd3 IN (${categories}) || business.bus_cat_cd4 IN (${categories}) || business.bus_cat_cd5 IN (${categories})`;
+          whereClause = `${whereClause} AND (business.bus_cat_cd IN (${categories}) || business.bus_cat_cd2 IN (${categories}) || business.bus_cat_cd3 IN (${categories}) || business.bus_cat_cd4 IN (${categories}) || business.bus_cat_cd5 IN (${categories}))`;
         }
         if (key === 'service') {
           whereClause = `${whereClause} AND cat_codes.ddb = '${value}'`;
@@ -124,7 +124,7 @@ function getBusinesses(query) {
       conn.query(
         `SELECT SQL_CALC_FOUND_ROWS business.bus_cd, business.*,cat_codes.*, states.st_name as stateName, countries.co_name as countryName  FROM business 
       LEFT JOIN cat_codes
-      ON cat_codes.bus_cat_cd = business.bus_cat_cd AND cat_codes.bus_cat_cd = business.bus_cat_cd2 AND cat_codes.bus_cat_cd = business.bus_cat_cd3  AND cat_codes.bus_cat_cd = business.bus_cat_cd4 AND cat_codes.bus_cat_cd = business.bus_cat_cd5
+      ON cat_codes.bus_cat_cd = business.bus_cat_cd OR cat_codes.bus_cat_cd = business.bus_cat_cd2 OR cat_codes.bus_cat_cd = business.bus_cat_cd3  OR cat_codes.bus_cat_cd = business.bus_cat_cd4 OR cat_codes.bus_cat_cd = business.bus_cat_cd5
       LEFT JOIN states
       ON states.st_cd = business.bus_st
       LEFT JOIN countries
