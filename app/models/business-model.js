@@ -130,7 +130,6 @@ function getBusinesses(query) {
       LEFT JOIN countries
       ON countries.co_cd = business.bus_co
       ${whereClause}
-      GROUP BY business.bus_cd
       ORDER BY business.bus_cd
       LIMIT ${query.result} OFFSET ${(query.page - 1) * query.result}`,
         (error1, businesses) => {
